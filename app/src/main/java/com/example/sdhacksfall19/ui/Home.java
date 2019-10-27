@@ -31,7 +31,7 @@ public class Home extends AppCompatActivity {
         toStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent linkStart = new Intent(getApplicationContext(), TurtleGame.class);
+                Intent linkStart = new Intent(getApplicationContext(), Turtle.class);
                 startActivity(linkStart);
                 finish();
 

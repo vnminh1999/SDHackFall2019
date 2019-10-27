@@ -18,7 +18,7 @@
             android:name=".ui.LosePage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.TurtleGame"
+            android:name=".ui.Turtle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.Home" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

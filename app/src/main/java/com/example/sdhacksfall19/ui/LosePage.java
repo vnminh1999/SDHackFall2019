@@ -33,7 +33,7 @@ public class LosePage extends AppCompatActivity {
 
         toRestart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Intent linkRestart = new Intent(getApplicationContext(), TurtleGame.class);
+                Intent linkRestart = new Intent(getApplicationContext(), Turtle.class);
                 startActivity(linkRestart);
                 finish();
             }

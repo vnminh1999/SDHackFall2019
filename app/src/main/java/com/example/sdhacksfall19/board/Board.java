@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Board {
     private static final int WIDTH = 13;
     private static final int HEIGHT = 17;
-    private static final int MAX_TURTLES = 20;
+    private static final int MAX_TURTLES = 2;
 
     private Tiles[][] board;
 
