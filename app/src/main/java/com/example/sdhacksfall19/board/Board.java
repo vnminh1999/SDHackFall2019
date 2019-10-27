@@ -315,6 +315,16 @@ public class Board {
         return board[c.getY()][c.getX()] == Tiles.Nothing;
     }
 
+    public boolean checkIfNothingOrWall(ArrayList<Coordinate> cList) {
+        for(Coordinate c : cList) {
+            if(!(board[c.getY()][c.getX()] == Tiles.Nothing ||
+                    board[c.getY()][c.getX()] == Tiles.TrashWall))
+                return false;
+        }
+
+        return true;
+    }
+
     private boolean checkIfStray(Coordinate c) {
         return board[c.getY()][c.getX()] == Tiles.StrayTurtle;
     }
