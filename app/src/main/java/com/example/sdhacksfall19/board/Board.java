@@ -71,11 +71,6 @@ public class Board {
 
     /* Put all items on board via tile types and set board*/
     public void updateBoard() {
-        // update trash
-
-
-        // put trash on board
-
         // update trail
         trail.update();
 
@@ -91,21 +86,69 @@ public class Board {
                 case Up:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleUp;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Down:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleDown;
+
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Right:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleRight;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Left:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleLeft;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
             }
         } else if (checkIfStray(trail.getMama().getC())) {
@@ -182,21 +225,69 @@ public class Board {
                 case Up:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleUp;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Down:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleDown;
+
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Right:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleRight;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Left:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleLeft;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
             }
 
@@ -205,25 +296,73 @@ public class Board {
             initNothing();
 
             trail.getMama().setDir(trail.getCurrDir());
-            switch(trail.getMama().getDir()) {
+            switch (trail.getMama().getDir()) {
                 case Up:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleUp;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Down:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleDown;
+
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Right:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleRight;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()+1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
 
                 case Left:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleLeft;
+
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()-1]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()-1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+                    board[trail.getMama().getC().getY()+1][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleShield;
+
                     break;
             }
 
@@ -233,7 +372,7 @@ public class Board {
             initNothing();
 
             trail.getMama().setDir(trail.getCurrDir());
-            switch(trail.getMama().getDir()) {
+            switch (trail.getMama().getDir()) {
                 case Up:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleUp;
