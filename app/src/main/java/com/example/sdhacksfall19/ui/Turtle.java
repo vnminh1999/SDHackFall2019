@@ -44,7 +44,7 @@ public class Turtle extends AppCompatActivity {
                     this.cancel();
 
                 } else if(gameView.getBoard().isWon()) {
-                    goToBonusPage();
+                    goToWinPage();
                     this.cancel();
                 }
             }
@@ -63,9 +63,9 @@ public class Turtle extends AppCompatActivity {
         finish();
     }
 
-    protected void goToBonusPage() {
-        Intent linkBonus = new Intent(getApplicationContext(), BonusRound.class);
-        startActivity(linkBonus);
+    protected void goToWinPage() {
+        Intent linkWin = new Intent(getApplicationContext(), WinPage.class);
+        startActivity(linkWin);
         finish();
     }
 
