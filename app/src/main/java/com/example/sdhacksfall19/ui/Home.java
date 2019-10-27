@@ -3,6 +3,7 @@ package com.example.sdhacksfall19.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -18,6 +19,8 @@ import java.util.TimerTask;
 public class Home extends AppCompatActivity {
 
     public TextView showFact;
+
+    public MediaPlayer song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,8 @@ public class Home extends AppCompatActivity {
             }
         });
 
-
+        song = MediaPlayer.create(Home.this, R.raw.music);
+        song.start();
 
         class FadeTimerTask extends TimerTask {
             int keepShowing = 500, keepFading = 500;

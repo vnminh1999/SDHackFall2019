@@ -2,6 +2,7 @@ package com.example.sdhacksfall19.board;
 
 import com.example.sdhacksfall19.enums.*;
 import com.example.sdhacksfall19.movement.*;
+import com.example.sdhacksfall19.trash.Trash;
 import com.example.sdhacksfall19.turtles.BabyTurtle;
 import com.example.sdhacksfall19.turtles.StrayTurtle;
 import com.example.sdhacksfall19.turtles.TurtleTrail;
@@ -18,8 +19,13 @@ public class Board {
     private StrayTurtle strayTurtle;
     private TurtleTrail trail;
 
+    private ArrayList<Trash> trash = new ArrayList<>();
+    private ArrayList<Integer> lifetime = new ArrayList<>();
+
     private ArrayList<Coordinate> trashWalls = new ArrayList<>();
     private ArrayList<Coordinate> exitTiles = new ArrayList<>();
+
+    private int addTrash = 0;
 
     private int numTurtlesSaved;
     private boolean lost;
@@ -42,6 +48,23 @@ public class Board {
         updateBoard();
         lost = false;
         won = false;
+    }
+
+    private void updateTrash() {
+        for(int i = 0; i < trash.size(); i++) {
+            if(lifetime.get(i) == 0) {
+                lifetime.remove(i);
+                trash.remove(i);
+            } else {
+                lifetime.set(i, lifetime.get(i)-1);
+            }
+        }
+    }
+
+    private void addTrash() {
+        for(Trash t : trash) {
+            board[t.getC().getY()][t.getC().getX()] = t.getType();
+        }
     }
 
     /* Add trash walls to initial board */
@@ -71,15 +94,16 @@ public class Board {
 
     /* Put all items on board via tile types and set board*/
     public void updateBoard() {
-        // update trail
+        // update trail and trash
         trail.update();
+        updateTrash();
 
         // put trail on board and check for losing/collecting turtle
-
         // update mama
         if (checkIfNothing(trail.getMama().getC())) {
             // init to nothing
             initNothing();
+            addTrash();
 
             trail.getMama().setDir(trail.getCurrDir());
             switch (trail.getMama().getDir()) {
@@ -107,6 +131,7 @@ public class Board {
         else if (checkIfStray(trail.getMama().getC())) {
             // init to nothing
             initNothing();
+            addTrash();
 
             strayTurtle = null;
 
@@ -199,6 +224,7 @@ public class Board {
         } else if(checkIfExit(trail.getMama().getC())){
             // init to nothing
             initNothing();
+            addTrash();
 
             trail.getMama().setDir(trail.getCurrDir());
             switch (trail.getMama().getDir()) {
@@ -227,6 +253,7 @@ public class Board {
         }else {
             // init to nothing
             initNothing();
+            addTrash();
 
             trail.getMama().setDir(trail.getCurrDir());
             switch (trail.getMama().getDir()) {
@@ -293,11 +320,25 @@ public class Board {
             }
         }
 
+        addTrashWalls();
+
         // add exit tiles
         for(Coordinate exit : exitTiles)
             this.board[exit.getY()][exit.getX()] = Tiles.Exit;
 
-        // add more trash?
+        // add more trash
+        if(addTrash % 8 == 0) {
+            trash.add(new Trash(this));
+            lifetime.add(10);
+
+            trash.add(new Trash(this));
+            lifetime.add(20);
+
+            trash.add(new Trash(this));
+            lifetime.add(30);
+        }
+
+        addTrash++;
 
         // add stray turtle tile
         if(strayTurtle != null)
@@ -317,6 +358,12 @@ public class Board {
 
     public boolean checkIfNothingOrWall(ArrayList<Coordinate> cList) {
         for(Coordinate c : cList) {
+            if(c.getY() < 0 || c.getY() >= Board.getHEIGHT())
+                continue;
+
+            if(c.getX() < 0 || c.getX() >= Board.getWIDTH())
+                continue;
+
             if(!(board[c.getY()][c.getX()] == Tiles.Nothing ||
                     board[c.getY()][c.getX()] == Tiles.TrashWall))
                 return false;

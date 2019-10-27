@@ -44,7 +44,7 @@ public class TurtleView extends View  {
         // score
         scorePaint = new Paint();
         scorePaint.setColor(Color.WHITE);
-        scorePaint.setTextSize(69);
+        scorePaint.setTextSize(blockSize);
         scorePaint.setTypeface(Typeface.DEFAULT);
         scorePaint.setAntiAlias(true);
         scorePaint.setShadowLayer(8,0,0,Color.BLACK);
@@ -125,7 +125,7 @@ public class TurtleView extends View  {
 
     private void drawScore(Canvas canvas) {
         canvas.drawText("Turtles saved: " + board.getNumTurtlesSaved() + "/" +
-                Board.getMaxTurtles(), 100, 2050,
+                Board.getMaxTurtles(), blockSize, blockSize*(Board.getHEIGHT()+1),
                 scorePaint);
     }
 
@@ -148,15 +148,6 @@ public class TurtleView extends View  {
 
         // draw score
         drawScore(canvas);
-
-        if(board.isLost()) {
-            canvas.drawText("Game over...", 100, 1500,
-                    scorePaint);
-
-        } else if(board.isWon()) {
-            canvas.drawText("Congratulations!", 100, 1500,
-                    scorePaint);
-        }
     }
 
     @Override
