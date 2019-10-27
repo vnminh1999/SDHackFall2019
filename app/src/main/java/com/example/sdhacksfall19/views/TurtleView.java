@@ -147,6 +147,11 @@ public class TurtleView extends View  {
         drawScore(canvas);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+    }
+
     private void setupImg () {
         backgroundImg = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         strayTurtleImg = BitmapFactory.decodeResource(getResources(), R.drawable.baby_turtle_stray);
