@@ -37,6 +37,7 @@ public class TurtleView extends View  {
         paint.setDither(true);
 
         // score
+        scorePaint = new Paint();
         scorePaint.setColor(Color.WHITE);
         scorePaint.setTextSize(69);
         scorePaint.setTypeface(Typeface.DEFAULT);
@@ -224,5 +225,9 @@ public class TurtleView extends View  {
         trashImg[4] = Bitmap.createScaledBitmap(trashImg[4],
                 canvas.getWidth()/Board.getWIDTH(),
                 canvas.getHeight()/Board.getHEIGHT(), true);
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

@@ -20,15 +20,14 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                /*
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameView.invalidate();
-                    }
-                }, 1000);*/
-                gameView.invalidate();
+                while(!gameView.getBoard().isLost()) {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameView.invalidate();
+                        }
+                    }, 2000);
+                }
             }
         }).start();
     }
