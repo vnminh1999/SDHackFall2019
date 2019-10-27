@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Board {
     private static final int WIDTH = 13;
     private static final int HEIGHT = 17;
-    private static final int MAX_TURTLES = 20;
+    private static final int MAX_TURTLES = 5;
 
     private Tiles[][] board;
 
@@ -23,13 +23,14 @@ public class Board {
 
     private int numTurtlesSaved;
     private boolean lost;
+    private boolean won;
 
     /* Constructor: create and initialize items on board
      */
     public Board() {
         board = new Tiles[HEIGHT][WIDTH];
         numTurtlesSaved = -1;
-        lost = false;
+
 
         // add wall
         addTrashWalls();
@@ -39,6 +40,8 @@ public class Board {
         trail = new TurtleTrail();
         
         updateBoard();
+        lost = false;
+        won = false;
     }
 
     /* Add trash walls to initial board */
@@ -70,8 +73,6 @@ public class Board {
     public void updateBoard() {
         // update trash
 
-        // init to nothing
-        initNothing();
 
         // put trash on board
 
@@ -79,35 +80,14 @@ public class Board {
         trail.update();
 
         // put trail on board and check for losing/collecting turtle
-        // add children turtles
-        for(int i = 0; i < trail.getChildren().size(); i++) {
-            switch(trail.getChildren().get(i).getDir()) {
-                case Up:
-                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
-                            = Tiles.BabyTurtleUp;
-                    break;
-
-                case Down:
-                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
-                            = Tiles.BabyTurtleDown;
-                    break;
-
-                case Right:
-                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
-                            = Tiles.BabyTurtleRight;
-                    break;
-
-                case Left:
-                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
-                            = Tiles.BabyTurtleLeft;
-                    break;
-            }
-        }
 
         // update mama
-        if(checkIfNothing(trail.getMama().getC())) {
+        if (checkIfNothing(trail.getMama().getC())) {
+            // init to nothing
+            initNothing();
+
             trail.getMama().setDir(trail.getCurrDir());
-            switch(trail.getMama().getDir()) {
+            switch (trail.getMama().getDir()) {
                 case Up:
                     board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
                             = Tiles.MamaTurtleUp;
@@ -128,44 +108,101 @@ public class Board {
                             = Tiles.MamaTurtleLeft;
                     break;
             }
-        } else if(checkIfStray(trail.getMama().getC())) {
+        } else if (checkIfStray(trail.getMama().getC())) {
+            // init to nothing
+            initNothing();
+
             strayTurtle = null;
 
             // new location
             Coordinate newC = null;
             Direction newDir = Direction.Up;
 
-            switch(trail.getChildren().get(trail.getChildren().size()-1).getDir()) {
+            if (trail.getChildren().size() > 0)
+                switch (trail.getChildren().get(trail.getChildren().size() - 1).getDir()) {
+                    case Up:
+                        newC = new Coordinate(trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getX(), trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getY() + 1);
+                        newDir = Direction.Up;
+                        break;
+
+                    case Down:
+                        newC = new Coordinate(trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getX(), trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getY() - 1);
+                        newDir = Direction.Down;
+                        break;
+
+                    case Right:
+                        newC = new Coordinate(trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getX() - 1, trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getY());
+                        newDir = Direction.Right;
+                        break;
+
+                    case Left:
+                        newC = new Coordinate(trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getX() - 1, trail.getChildren().get(
+                                trail.getChildren().size() - 1).getC().getY());
+                        newDir = Direction.Left;
+                        break;
+                }
+            else
+                switch (trail.getMama().getDir()) {
+                    case Up:
+                        newC = new Coordinate(trail.getMama().getC().getX(),
+                                trail.getMama().getC().getY() + 1);
+                        newDir = Direction.Up;
+                        break;
+
+                    case Down:
+                        newC = new Coordinate(trail.getMama().getC().getX(),
+                                trail.getMama().getC().getY() - 1);
+                        newDir = Direction.Down;
+                        break;
+
+                    case Right:
+                        newC = new Coordinate(trail.getMama().getC().getX() + 1,
+                                trail.getMama().getC().getY());
+                        newDir = Direction.Down;
+                        break;
+
+                    case Left:
+                        newC = new Coordinate(trail.getMama().getC().getX() - 1,
+                                trail.getMama().getC().getY());
+                        newDir = Direction.Down;
+                        break;
+                }
+
+            trail.getChildren().add(new BabyTurtle(newDir, newC));
+
+            trail.getMama().setDir(trail.getCurrDir());
+            switch (trail.getMama().getDir()) {
                 case Up:
-                    newC = new Coordinate(trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getX(), trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getY() + 1);
-                    newDir = Direction.Up;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleUp;
                     break;
 
                 case Down:
-                    newC = new Coordinate(trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getX(), trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getY() - 1);
-                    newDir = Direction.Down;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleDown;
                     break;
 
                 case Right:
-                    newC = new Coordinate(trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getX() - 1, trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getY());
-                    newDir = Direction.Right;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleRight;
                     break;
 
                 case Left:
-                    newC = new Coordinate(trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getX() - 1, trail.getChildren().get(
-                            trail.getChildren().size() - 1).getC().getY());
-                    newDir = Direction.Right;
+                    board[trail.getMama().getC().getY()][trail.getMama().getC().getX()]
+                            = Tiles.MamaTurtleLeft;
                     break;
             }
 
-            trail.getChildren().add(new BabyTurtle(newDir, newC));
+        } else if(checkIfExit(trail.getMama().getC())){
+            // init to nothing
+            initNothing();
 
             trail.getMama().setDir(trail.getCurrDir());
             switch(trail.getMama().getDir()) {
@@ -190,7 +227,11 @@ public class Board {
                     break;
             }
 
-        } else {
+            this.won = true;
+        }else {
+            // init to nothing
+            initNothing();
+
             trail.getMama().setDir(trail.getCurrDir());
             switch(trail.getMama().getDir()) {
                 case Up:
@@ -217,16 +258,43 @@ public class Board {
             this.lost = true;
         }
 
+        // add children turtles
+        for(int i = 0; i < trail.getChildren().size(); i++) {
+            switch(trail.getChildren().get(i).getDir()) {
+                case Up:
+                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
+                            = Tiles.BabyTurtleUp;
+                    break;
 
+                case Down:
+                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
+                            = Tiles.BabyTurtleDown;
+                    break;
+
+                case Right:
+                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
+                            = Tiles.BabyTurtleRight;
+                    break;
+
+                case Left:
+                    board[trail.getChildren().get(i).getC().getY()][trail.getChildren().get(i).getC().getX()]
+                            = Tiles.BabyTurtleLeft;
+                    break;
+            }
+        }
 
         // add stray turtle (create new one if old one already collected)
-        // if at 99 turtles, add exit
+        // if at max turtles, add exit
         if(strayTurtle == null) {
-            if(numTurtlesSaved < MAX_TURTLES) {
+            if(numTurtlesSaved < MAX_TURTLES-1) {
                 strayTurtle = new StrayTurtle(this);
                 numTurtlesSaved++;
-            } else
+            } else {
+                if(numTurtlesSaved != MAX_TURTLES)
+                    numTurtlesSaved = MAX_TURTLES;
+
                 addExit();
+            }
         }
 
         // add exit tiles
@@ -255,6 +323,10 @@ public class Board {
         return board[c.getY()][c.getX()] == Tiles.StrayTurtle;
     }
 
+    private boolean checkIfExit(Coordinate c) {
+        return board[c.getY()][c.getX()] == Tiles.Exit;
+    }
+
     /* update board and return it */
     public Tiles[][] getBoard() {
         return board;
@@ -280,5 +352,11 @@ public class Board {
         return lost;
     }
 
+    public boolean isWon() {
+        return won;
+    }
 
+    public TurtleTrail getTrail() {
+        return trail;
+    }
 }

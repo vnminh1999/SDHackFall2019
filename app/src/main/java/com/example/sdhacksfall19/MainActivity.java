@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         gameView = new TurtleView(this);
         setContentView(gameView);
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -28,24 +29,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         gameView.invalidate();
+                        if(gameView.getBoard().isLost() || gameView.getBoard().isWon())
+                            Thread.currentThread().interrupt();
                     }
                 });
             }
         },0,Interval);
-/*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(!gameView.getBoard().isLost()) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            gameView.invalidate();
-                        }
-                    }, 2000);
-                }
-            }
-        }).start();
-        */
+
+
     }
 }

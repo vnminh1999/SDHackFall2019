@@ -6,6 +6,8 @@ import android.view.*;
 
 import com.example.sdhacksfall19.R;
 import com.example.sdhacksfall19.board.Board;
+import com.example.sdhacksfall19.enums.Direction;
+import com.example.sdhacksfall19.movement.Coordinate;
 
 public class TurtleView extends View  {
     // game board
@@ -22,6 +24,9 @@ public class TurtleView extends View  {
 
     public Paint paint;
     public Paint scorePaint;
+
+    private Coordinate press;
+    private Coordinate lift;
 
     public TurtleView(Context context){
         super(context);
@@ -124,7 +129,7 @@ public class TurtleView extends View  {
 
     private void drawScore(Canvas canvas) {
         canvas.drawText("Turtles saved: " + board.getNumTurtlesSaved() + "/" +
-                Board.getMaxTurtles(), blockSize*(Board.getHEIGHT()+1), blockSize,
+                Board.getMaxTurtles(), 100, 2050,
                 scorePaint);
     }
 
@@ -135,7 +140,9 @@ public class TurtleView extends View  {
 
         blockSize = canvas.getWidth()/Board.getWIDTH();
 
-        board.updateBoard();
+
+        if(!board.isLost() && !board.isWon())
+            board.updateBoard();
 
         rescaleImg(canvas);
         canvas.drawBitmap(backgroundImg, 0, 0, paint);
@@ -145,11 +152,65 @@ public class TurtleView extends View  {
 
         // draw score
         drawScore(canvas);
+
+        if(board.isLost()) {
+            canvas.drawText("Game over...", 100, 1500,
+                    scorePaint);
+
+        } else if(board.isWon()) {
+            canvas.drawText("Congratulations!", 100, 1500,
+                    scorePaint);
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                press = new Coordinate((int)event.getX(), (int)event.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                lift = new Coordinate((int)event.getX(), (int)event.getY());
+                switch(swipeDir(press, lift)) {
+                    case Up:
+                        board.getTrail().setCurrDir(Direction.Up);
+                        break;
+                    case Down:
+                        board.getTrail().setCurrDir(Direction.Down);
+                        break;
+                    case Left:
+                        board.getTrail().setCurrDir(Direction.Left);
+                        break;
+                    case Right:
+                        board.getTrail().setCurrDir(Direction.Right);
+                        break;
+                }
+        }
 
+        return true;
+    }
+
+    private Direction swipeDir(Coordinate press, Coordinate lift) {
+        Direction swipe;
+        int x_diff = lift.getX() - press.getX();
+        int y_diff = lift.getY() - press.getY();
+
+        int x_abs = Math.abs(x_diff);
+        int y_abs = Math.abs(y_diff);
+
+        if(x_abs > y_abs) {
+            if(x_diff >= 0)
+                swipe = Direction.Right;
+            else
+                swipe = Direction.Left;
+        } else {
+            if(y_diff >= 0)
+                swipe = Direction.Down;
+            else
+                swipe = Direction.Up;
+        }
+
+        return swipe;
     }
 
     private void setupImg () {
