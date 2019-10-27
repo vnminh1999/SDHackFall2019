@@ -70,10 +70,6 @@ public class TurtleView extends View  {
                         canvas.drawBitmap(mamaTurtleImg[3], x*blockSize,
                                 y*blockSize, paint);
                         break;
-                    case MamaTurtleShield:
-                        canvas.drawBitmap(nothingImg, x*blockSize,
-                                y*blockSize, paint);
-                        break;
                     case BabyTurtleUp:
                         canvas.drawBitmap(babyTurtleImg[0], x*blockSize,
                                 y*blockSize, paint);

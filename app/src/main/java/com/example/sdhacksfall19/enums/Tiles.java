@@ -5,7 +5,6 @@ public enum Tiles {
     MamaTurtleDown,
     MamaTurtleLeft,
     MamaTurtleRight,
-    MamaTurtleShield,
 
     BabyTurtleUp,
     BabyTurtleDown,
