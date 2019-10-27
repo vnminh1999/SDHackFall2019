@@ -173,16 +173,24 @@ public class TurtleView extends View  {
                 lift = new Coordinate((int)event.getX(), (int)event.getY());
                 switch(swipeDir(press, lift)) {
                     case Up:
-                        board.getTrail().setCurrDir(Direction.Up);
+                        if(!(board.getTrail().getCurrDir() == Direction.Down
+                            && board.getTrail().getChildren().size() >0))
+                            board.getTrail().setCurrDir(Direction.Up);
                         break;
                     case Down:
-                        board.getTrail().setCurrDir(Direction.Down);
+                        if(!(board.getTrail().getCurrDir() == Direction.Up
+                                && board.getTrail().getChildren().size() >0))
+                            board.getTrail().setCurrDir(Direction.Down);
                         break;
                     case Left:
-                        board.getTrail().setCurrDir(Direction.Left);
+                        if(!(board.getTrail().getCurrDir() == Direction.Right
+                                && board.getTrail().getChildren().size() >0))
+                            board.getTrail().setCurrDir(Direction.Left);
                         break;
                     case Right:
-                        board.getTrail().setCurrDir(Direction.Right);
+                        if(!(board.getTrail().getCurrDir() == Direction.Left
+                                && board.getTrail().getChildren().size() >0))
+                            board.getTrail().setCurrDir(Direction.Right);
                         break;
                 }
         }
