@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SDHacksFall19</string>
+    <string name="title_activity_second">Turtles</string>
+    <string name="title_activity_lose_page">LosePage</string>
+    <string name="title_activity_win_page">WinPage</string>
+    <string name="title_activity_bonus_round">BonusRound</string>
 </resources>

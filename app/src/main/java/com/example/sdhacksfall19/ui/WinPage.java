@@ -1,44 +1,52 @@
 package com.example.sdhacksfall19.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.sdhacksfall19.R;
+import com.example.sdhacksfall19.alerts.Facts;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.example.sdhacksfall19.alerts.Facts;
-import com.example.sdhacksfall19.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-public class Home extends AppCompatActivity {
+public class WinPage extends AppCompatActivity {
 
     public TextView showFact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.win_page);
 
-        Button toStart = (Button)findViewById(R.id.startButton);
+        Button toHome = (Button)findViewById(R.id.homeButton);
+        Button toRestart = (Button)findViewById(R.id.restartButton);
         showFact = (TextView)findViewById(R.id.factsTextView);
         final Handler handler = new Handler();
 
-        toStart.setOnClickListener(new View.OnClickListener() {
+        toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent linkStart = new Intent(getApplicationContext(), TurtleGame.class);
-                startActivity(linkStart);
+                Intent linkHome = new Intent(getApplicationContext(), Home.class);
+                startActivity(linkHome);
                 finish();
-
             }
         });
 
-
+        toRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent linkRestart = new Intent(getApplicationContext(),TurtleGame.class);
+                startActivity(linkRestart);
+                finish();
+            }
+        });
 
         class FadeTimerTask extends TimerTask {
             int keepShowing = 500, keepFading = 500;
@@ -49,7 +57,7 @@ public class Home extends AppCompatActivity {
                     public void run() {
                         if(iterations%period == 0){
                             showFact.setTextColor(showFact.getTextColors().withAlpha(0));
-                            showFact.setText((CharSequence)Facts.generateRandomFact());
+                            showFact.setText((CharSequence) Facts.generateRandomFact());
                         } else if(iterations%period > 0 && iterations%period < 256){
                             showFact.setTextColor(showFact.getTextColors().withAlpha(iterations%period));
                         } else if(iterations%period > 255 + keepShowing && iterations%period < period - keepFading){
@@ -65,6 +73,14 @@ public class Home extends AppCompatActivity {
         Timer fadeTimer = new Timer();
         TimerTask task = new FadeTimerTask();
         fadeTimer.schedule(task,2000,10);
-
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent linkHome = new Intent(getApplicationContext(),Home.class);
+        startActivity(linkHome);
+        finish();
+    }
+
 }
